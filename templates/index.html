@@ -1,18 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Docker Todo App</title>
+    <meta charset="UTF-8">
+    <title>My Todo List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 24px;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #764ba2;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #5f3a85;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            background: #f8f7fc;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #333;
+            border-left: 4px solid #764ba2;
+            animation: fadeIn 0.3s ease;
+        }
+
+        li:empty {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 20px 0;
+            font-size: 14px;
+        }
+    </style>
 </head>
-<body style="font-family: sans-serif; max-width: 500px; margin: 50px auto;">
-    <h1>📝 My Todo List</h1>
-    <form action="/add" method="POST">
-        <input type="text" name="task" placeholder="New task..." required>
-        <button type="submit">Add</button>
-    </form>
-    <ul>
-        {% for todo in todos %}
-            <li>{{ todo[1] }}</li>
-        {% endfor %}
-    </ul>
+<body>
+    <div class="container">
+        <h1>📝 My Todo List</h1>
+        <form action="/add" method="POST">
+            <input type="text" name="task" placeholder="What needs to be done?" required>
+            <button type="submit">Add</button>
+        </form>
+        <ul>
+            {% for todo in todos %}
+                <li>{{ todo[1] }}</li>
+            {% endfor %}
+        </ul>
+        {% if not todos %}
+            <p class="empty-state">No tasks yet. Add one above! 🎯</p>
+        {% endif %}
+    </div>
 </body>
 </html>
